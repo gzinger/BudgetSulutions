@@ -10,36 +10,19 @@ class Program
         Console.WriteLine("   Transaction Categorizer & Reporter");
         Console.WriteLine("===========================================\n");
 
-        // Configuration
-        var baseDirectory = args.Length > 0 
-            ? args[0] 
-            : Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) 
-              ?? Environment.CurrentDirectory;
+        // Initialize configuration service
+        var configService = new ConfigurationService();
+        
+        // Get directories from command-line args or prompt user
+        var configDirectory = configService.GetConfigDirectory(args.Length > 0 ? args[0] : null);
+        var dataDirectory = configService.GetDataDirectory(args.Length > 1 ? args[1] : null);
 
-        // If running from bin folder, go up to find CSV files
-        if (baseDirectory.Contains("bin"))
-        {
-            baseDirectory = Path.GetFullPath(Path.Combine(baseDirectory, "..", "..", "..", ".."));
-        }
+        Console.WriteLine($"Configuration directory: {configDirectory}");
+        Console.WriteLine($"Data directory: {dataDirectory}\n");
 
-        Console.WriteLine($"Working directory: {baseDirectory}\n");
-
-        // Define input files
-        var bankAccountFiles = new[]
-        {
-            Path.Combine(baseDirectory, "Chase1047_Activity_20250304.CSV"),
-            Path.Combine(baseDirectory, "Chase4645_Activity_20250304.CSV"),
-            Path.Combine(baseDirectory, "Chase6759_Activity_20250304.CSV")
-        };
-
-        var creditCardFiles = new[]
-        {
-            Path.Combine(baseDirectory, "Chase2783_Activity20240101_20241231_20250305.CSV"),
-            Path.Combine(baseDirectory, "Chase3383_Activity20240101_20241231_20250305.CSV")
-        };
-
-        var mappingsFile = Path.Combine(baseDirectory, "category_mappings.json");
-        var outputFile = Path.Combine(baseDirectory, $"Transactions_Report_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx");
+        // Define paths for config files
+        var mappingsFile = Path.Combine(configDirectory, "category_mappings.json");
+        var outputFile = Path.Combine(dataDirectory, $"Transactions_Report_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx");
 
         // Initialize services
         var csvReader = new CsvReaderService();
@@ -54,12 +37,12 @@ class Program
         {
             Console.WriteLine("Using Azure OpenAI for categorization...");
             var model = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT") ?? "gpt-4o-mini";
-            aiService = new OpenAiCategorizationService(azureOpenAiKey, azureOpenAiEndpoint, model, mappingsFile);
+            aiService = new OpenAiCategorizationService(azureOpenAiKey, configService, configDirectory, azureOpenAiEndpoint, model, mappingsFile);
         }
         else if (!string.IsNullOrEmpty(openAiKey))
         {
             Console.WriteLine("Using OpenAI for categorization...");
-            aiService = new OpenAiCategorizationService(openAiKey, mappingsFilePath: mappingsFile);
+            aiService = new OpenAiCategorizationService(openAiKey, configService, configDirectory, mappingsFilePath: mappingsFile);
         }
         else
         {
@@ -68,41 +51,54 @@ class Program
             aiService = new FallbackCategorizationService();
         }
 
-        var categorizationService = new CategorizationService(mappingsFile, aiService);
+        var categorizationService = new CategorizationService(mappingsFile, configService, configDirectory, aiService);
         var excelService = new ExcelExportService();
+
+        // Find all CSV files in the data directory
+        var csvFiles = Directory.GetFiles(dataDirectory, "*.CSV", SearchOption.TopDirectoryOnly);
+        
+        if (csvFiles.Length == 0)
+        {
+            Console.WriteLine($"No CSV files found in {dataDirectory}");
+            return;
+        }
 
         // Read all transactions
         var allTransactions = new List<Models.Transaction>();
 
-        Console.WriteLine("Reading bank account files...");
-        foreach (var file in bankAccountFiles)
+        Console.WriteLine("Reading transaction files...");
+        foreach (var file in csvFiles)
         {
-            if (File.Exists(file))
+            Console.WriteLine($"  - {Path.GetFileName(file)}");
+            
+            try
             {
-                Console.WriteLine($"  - {Path.GetFileName(file)}");
-                var transactions = csvReader.ReadBankAccountCsv(file);
+                // Determine file type by checking headers or content
+                var firstLine = File.ReadLines(file).FirstOrDefault() ?? "";
+                
+                List<Models.Transaction> transactions;
+                if (firstLine.Contains("Posting Date") && firstLine.Contains("Balance"))
+                {
+                    // Bank account format
+                    transactions = csvReader.ReadBankAccountCsv(file);
+                }
+                else if (firstLine.Contains("Transaction Date") && firstLine.Contains("Post Date"))
+                {
+                    // Credit card format
+                    transactions = csvReader.ReadCreditCardCsv(file);
+                }
+                else
+                {
+                    Console.WriteLine($"    Unknown format, skipping...");
+                    continue;
+                }
+                
                 allTransactions.AddRange(transactions);
                 Console.WriteLine($"    Found {transactions.Count} transactions");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"  - {Path.GetFileName(file)} (NOT FOUND)");
-            }
-        }
-
-        Console.WriteLine("\nReading credit card files...");
-        foreach (var file in creditCardFiles)
-        {
-            if (File.Exists(file))
-            {
-                Console.WriteLine($"  - {Path.GetFileName(file)}");
-                var transactions = csvReader.ReadCreditCardCsv(file);
-                allTransactions.AddRange(transactions);
-                Console.WriteLine($"    Found {transactions.Count} transactions");
-            }
-            else
-            {
-                Console.WriteLine($"  - {Path.GetFileName(file)} (NOT FOUND)");
+                Console.WriteLine($"    Error reading file: {ex.Message}");
             }
         }
 
@@ -110,7 +106,7 @@ class Program
 
         if (allTransactions.Count == 0)
         {
-            Console.WriteLine("No transactions found. Please check the file paths.");
+            Console.WriteLine("No transactions found. Please check the files.");
             return;
         }
 
@@ -118,7 +114,7 @@ class Program
         Console.WriteLine("\nCategorizing transactions...");
         Console.WriteLine("(You may be prompted for uncategorized transactions)\n");
         
-        await categorizationService.CategorizeTransactionsAsync(allTransactions, useAi: aiService != null);
+        await categorizationService.CategorizeTransactionsAsync(allTransactions, useAi: aiService != null && aiService is not FallbackCategorizationService);
 
         // Display summary
         Console.WriteLine("\n===========================================");

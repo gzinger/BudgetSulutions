@@ -9,117 +9,61 @@ public class CategorizationService
     private readonly string _mappingsFilePath;
     private CategoryMappings _mappings;
     private readonly IAiCategorizationService? _aiService;
+    private readonly ConfigurationService _configService;
+    private readonly string _configDirectory;
+    private CategoriesConfiguration _categoriesConfig;
 
-    // Predefined patterns for common transactions
+    // Predefined patterns for common/well-known transactions only
+    // Specific/local merchants should be in category_mappings.json
     private static readonly List<(string Pattern, string Category, string Subcategory, string Provider)> DefaultPatterns = new()
     {
-        // Utilities
-        (@"CONSOLIDATED EDISON|CON ?ED", "Utilities", "Electrical", "Con Edison"),
+        // Utilities - Well-known providers
+        (@"CONSOLIDATED EDISON|CON ?ED", "Utilities", "Electric", "Con Edison"),
         (@"NATIONAL GRID|KEYSPAN", "Utilities", "Gas", "National Grid"),
         (@"OPTIMUM", "Utilities", "Internet/Cable", "Optimum"),
         (@"OOMA", "Utilities", "Phone", "Ooma"),
         
-        // Banking/Transfers
-        (@"ODP TRANSFER|Online Transfer", "Transfers", "Internal Transfer", "Chase"),
+        // Banking/Transfers - Generic patterns
+        (@"ODP TRANSFER|Online Transfer", "Financial", "Transfer", "Chase"),
         (@"INTEREST PAYMENT", "Income", "Interest", "Chase"),
-        (@"CHASE CREDIT CRD AUTOPAY", "Credit Card", "Payment", "Chase"),
-        (@"Zelle payment", "Transfers", "Zelle", "Chase"),
-        (@"ATM WITHDRAWAL|ATM W/D", "Cash", "ATM Withdrawal", "Chase"),
-        (@"WITHDRAWAL \d+/\d+", "Cash", "Withdrawal", "Chase"),
-        (@"Payment to Chase card", "Credit Card", "Payment", "Chase"),
-        (@"Credit Return", "Refund", "Credit Return", ""),
+        (@"CHASE CREDIT CRD AUTOPAY", "Financial", "Payment", "Chase"),
+        (@"Zelle payment", "Financial", "Transfer", "Chase"),
+        (@"ATM WITHDRAWAL|ATM W/D", "Financial", "ATM", "Chase"),
+        (@"Payment to Chase card", "Financial", "Payment", "Chase"),
+        (@"Credit Return", "Income", "Refund", ""),
+        (@"MONEYGRAM", "Financial", "Transfer", "MoneyGram"),
+        (@"BILLPAY|Bill Pay|Online Payment.*To", "Financial", "Payment", ""),
+        (@"AUTOMATIC PAYMENT.*THANK", "Financial", "Payment", "Chase"),
+        (@"LOAN_PMT|LOAN PMT", "Financial", "Payment", ""),
         
-        // Income
+        // Income - Generic patterns
         (@"PAYROLL|DIRDEP|Direct Deposit", "Income", "Salary", ""),
-        (@"EXTENSIS\s+PAYROLL", "Income", "Salary", "Extensis"),
-        (@"Ezer L'Cholim.*DIRDEP", "Income", "Salary", "Ezer L'Cholim"),
         
-        // Housing
-        (@"TRUIST MORTG|MORTGAGE", "Housing", "Mortgage", "Truist"),
-        (@"Prospect Park Ye", "Housing", "Rent/HOA", "Prospect Park"),
-        
-        // Insurance
-        (@"GLICNY|GLIC", "Insurance", "Life Insurance", "Guardian Life"),
-        (@"SageSure|SAGESURE", "Insurance", "Home Insurance", "SageSure"),
-        (@"NORTHWESTERN MU.*ISA|NORTHWESTERN MUTUAL", "Insurance", "Life Insurance", "Northwestern Mutual"),
-        
-        // Transportation
+        // Transportation - Well-known providers
         (@"E-Z\*?PASS|EZPASS", "Transportation", "Tolls", "EZ-Pass"),
-        (@"SUNOCO|EXXON|SHELL|BP|MOBIL", "Transportation", "Gas", ""),
+        (@"SUNOCO|EXXON|SHELL|BP|MOBIL|CHEVRON|TEXACO", "Transportation", "Gas/Fuel", ""),
         (@"NYCDOT PARKING", "Transportation", "Parking", "NYC DOT"),
         
-        // Shopping
-        (@"AMAZON|AMZN|Amazon", "Shopping", "Online Shopping", "Amazon"),
-        (@"Kindle", "Shopping", "Digital Content", "Amazon Kindle"),
-        (@"eBay", "Shopping", "Online Shopping", "eBay"),
+        // Shopping - Major retailers
+        (@"AMAZON|AMZN|Amazon", "Shopping", "Online", "Amazon"),
+        (@"eBay", "Shopping", "Online", "eBay"),
         (@"STAPLES", "Shopping", "Office Supplies", "Staples"),
-        (@"SP STANLEY", "Shopping", "General", "Stanley"),
+        (@"WALMART|WAL-MART", "Shopping", "Retail", "Walmart"),
+        (@"TARGET", "Shopping", "Retail", "Target"),
+        (@"COSTCO", "Shopping", "Wholesale", "Costco"),
         
-        // Groceries
-        (@"MOUNTAIN FRUITS", "Groceries", "Supermarket", "Mountain Fruits"),
-        (@"KOSHER PALACE", "Groceries", "Supermarket", "Kosher Palace"),
-        (@"BINGO WHOLESALE", "Groceries", "Supermarket", "Bingo Wholesale"),
-        (@"TWINS MARKET", "Groceries", "Supermarket", "Twins Market"),
-        (@"PRODUCE MARKET", "Groceries", "Supermarket", "Produce Market 2000"),
-        (@"OCEAN FRUIT", "Groceries", "Supermarket", "Ocean Fruit"),
-        
-        // Donations/Charity
-        (@"YESHIVA|Yeshiva", "Gifts & Donations", "Religious/Education", ""),
-        (@"CHABAD|Chabad", "Gifts & Donations", "Religious", ""),
-        (@"HEBRON FUND", "Gifts & Donations", "Charity", "Hebron Fund"),
-        (@"Israel Children Cancer", "Gifts & Donations", "Charity", "Israel Children Cancer"),
-        (@"CHESEDTODAY", "Gifts & Donations", "Charity", "ChesedToday"),
-        (@"YAD L'ACHIM", "Gifts & Donations", "Charity", "Yad L'Achim"),
-        (@"Chofetz Chaim", "Gifts & Donations", "Religious", "Chofetz Chaim Heritage"),
-        (@"Feed Israel", "Gifts & Donations", "Charity", "Feed Israel"),
-        (@"YOUNG ISRAEL|Young Israel", "Gifts & Donations", "Religious", "Young Israel"),
-        (@"Congregation|CONGREGATION", "Gifts & Donations", "Religious", ""),
-        (@"GoFundMe", "Gifts & Donations", "Charity", "GoFundMe"),
-        (@"TikvaChildrensHo", "Gifts & Donations", "Charity", "Tikva Children's Home"),
-        (@"Wikimedia", "Gifts & Donations", "Non-Profit", "Wikimedia"),
-        
-        // Food & Dining
-        (@"BRICK OVEN|PIZZA|RESTAURANT", "Food & Drink", "Restaurant", ""),
-        (@"THE CIRCLE", "Food & Drink", "Restaurant", "The Circle"),
-        (@"BENNY.*BRICK OVEN", "Food & Drink", "Restaurant", "Benny's Brick Oven"),
-        
-        // Services
-        (@"MONEYGRAM", "Services", "Money Transfer", "MoneyGram"),
-        (@"LAUNDRY", "Services", "Laundry", ""),
-        (@"HILA", "Services", "Professional Services", "Hila"),
-        (@"CHECK \d+", "Services", "Check Payment", ""),
-        
-        // Health
-        (@"PHARMACY|HEALTH|VOORHIES", "Health & Wellness", "Pharmacy", ""),
-        
-        // Entertainment
-        (@"J LEAGUES", "Entertainment", "Sports/Recreation", "J Leagues"),
-        (@"GOOGLE.*YouTube|YouTube", "Entertainment", "Streaming", "YouTube"),
-        
-        // Books/Education
-        (@"BERMAN BOOKS|JUDAICA|MEKOR", "Shopping", "Books/Religious Items", ""),
-        
-        // Bills
-        (@"BILLPAY|Bill Pay|Online Payment.*To", "Bills & Utilities", "Bill Payment", ""),
-        
-        // Credit Card specific
-        (@"AUTOMATIC PAYMENT.*THANK", "Credit Card", "Payment", "Chase"),
-        
-        // Loans
-        (@"DEPT EDUCATION|STUDENT LN|STUDENT LOAN", "Loans", "Education Loan", "Dept of Education"),
-        (@"LOAN_PMT|LOAN PMT", "Loans", "Loan Payment", ""),
-        
-        // Gas (category from credit card)
-        (@"Gas", "Transportation", "Gas", ""),
-        
-        // Travel
-        (@"Travel", "Transportation", "Travel", ""),
+        // Generic category patterns from credit card data
+        (@"Gas", "Transportation", "Gas/Fuel", ""),
+        (@"Travel", "Transportation", "Other", ""),
     };
 
-    public CategorizationService(string mappingsFilePath, IAiCategorizationService? aiService = null)
+    public CategorizationService(string mappingsFilePath, ConfigurationService configService, string configDirectory, IAiCategorizationService? aiService = null)
     {
         _mappingsFilePath = mappingsFilePath;
         _aiService = aiService;
+        _configService = configService;
+        _configDirectory = configDirectory;
+        _categoriesConfig = _configService.LoadCategories(configDirectory);
         _mappings = LoadMappings();
     }
 
@@ -359,26 +303,26 @@ public class CategorizationService
 
     private (string? category, string? subcategory, string? provider)? PromptUserForCategory(Transaction transaction, ref bool skipAll)
     {
-        Console.WriteLine($"\n{'=',-60}");
-        Console.WriteLine($"Transaction: {transaction.Description}");
-        Console.WriteLine($"Amount: {transaction.Amount:C2}");
-        Console.WriteLine($"Date: {transaction.TransactionDate:d}");
-        Console.WriteLine($"Account: {transaction.AccountType} - {transaction.AccountId}");
-        Console.WriteLine($"{'=',-60}");
+        Console.WriteLine($"\n{'=',-80}");
+        Console.WriteLine($"TRANSACTION DETAILS:");
+        Console.WriteLine($"{'=',-80}");
+        Console.WriteLine($"Description:  {transaction.Description}");
+        Console.WriteLine($"Amount:       {transaction.Amount:C2}");
+        Console.WriteLine($"Date:         {transaction.TransactionDate:d}");
+        Console.WriteLine($"Account:      {transaction.AccountType} - {transaction.AccountId}");
+        Console.WriteLine($"Source:       {transaction.SourceFile}");
+        Console.WriteLine($"Type:         {transaction.TransactionType}");
+        if (transaction.Balance.HasValue)
+            Console.WriteLine($"Balance:      {transaction.BalanceDisplay}");
+        Console.WriteLine($"{'=',-80}");
         
-        Console.WriteLine("\nCommon categories:");
-        var categories = new[] 
-        { 
-            "1. Utilities", "2. Transportation", "3. Groceries", "4. Shopping", 
-            "5. Food & Drink", "6. Gifts & Donations", "7. Income", "8. Transfers",
-            "9. Housing", "10. Insurance", "11. Health & Wellness", "12. Entertainment",
-            "13. Services", "14. Bills & Utilities", "15. Credit Card", "16. Loans", "17. Other"
-        };
-        
-        foreach (var cat in categories)
-            Console.WriteLine($"  {cat}");
+        Console.WriteLine("\nAvailable categories:");
+        for (int i = 0; i < _categoriesConfig.Categories.Count; i++)
+        {
+            Console.WriteLine($"  {i + 1}. {_categoriesConfig.Categories[i].Name}");
+        }
 
-        Console.Write("\nEnter category (number/custom), 's' to skip, 'a' to skip all: ");
+        Console.Write("\nEnter category (number or custom name), 's' to skip, 'a' to skip all: ");
         var categoryInput = Console.ReadLine()?.Trim();
         
         if (categoryInput?.ToLower() == "s")
@@ -393,19 +337,52 @@ public class CategorizationService
         }
 
         string category;
-        if (int.TryParse(categoryInput, out int catNum) && catNum >= 1 && catNum <= 17)
+        CategoryDefinition? selectedCategory = null;
+
+        if (int.TryParse(categoryInput, out int catNum) && catNum >= 1 && catNum <= _categoriesConfig.Categories.Count)
         {
-            category = categories[catNum - 1].Substring(categories[catNum - 1].IndexOf(' ') + 1);
+            selectedCategory = _categoriesConfig.Categories[catNum - 1];
+            category = selectedCategory.Name;
         }
         else
         {
             category = categoryInput ?? "Other";
+            selectedCategory = _categoriesConfig.Categories.FirstOrDefault(c => 
+                c.Name.Equals(category, StringComparison.OrdinalIgnoreCase));
         }
 
-        Console.Write("Enter subcategory: ");
-        var subcategory = Console.ReadLine()?.Trim();
-        if (string.IsNullOrEmpty(subcategory))
-            subcategory = "Other";
+        // Show existing subcategories for the selected category
+        string subcategory;
+        if (selectedCategory != null && selectedCategory.Subcategories.Count > 0)
+        {
+            Console.WriteLine($"\nAvailable subcategories for '{category}':");
+            for (int i = 0; i < selectedCategory.Subcategories.Count; i++)
+            {
+                Console.WriteLine($"  {i + 1}. {selectedCategory.Subcategories[i]}");
+            }
+            Console.Write("\nEnter subcategory (number or custom name): ");
+            var subcatInput = Console.ReadLine()?.Trim();
+
+            if (int.TryParse(subcatInput, out int subcatNum) && subcatNum >= 1 && subcatNum <= selectedCategory.Subcategories.Count)
+            {
+                subcategory = selectedCategory.Subcategories[subcatNum - 1];
+            }
+            else
+            {
+                subcategory = subcatInput ?? "Other";
+                // Add new subcategory to the category
+                if (!string.IsNullOrEmpty(subcategory))
+                {
+                    _configService.AddSubcategoryIfNeeded(category, subcategory, _configDirectory);
+                }
+            }
+        }
+        else
+        {
+            Console.Write("Enter subcategory: ");
+            subcategory = Console.ReadLine()?.Trim() ?? "Other";
+            _configService.AddSubcategoryIfNeeded(category, subcategory, _configDirectory);
+        }
 
         Console.Write("Enter provider name (or press Enter to auto-extract): ");
         var provider = Console.ReadLine()?.Trim();

@@ -24,6 +24,9 @@ public class Transaction
     
     // For tracking categorization source
     public string CategorizationSource { get; set; } = string.Empty; // "Original", "Pattern", "AI", "User"
+    
+    // Helper property for displaying balance
+    public string BalanceDisplay => Balance.HasValue ? Balance.Value.ToString("C2") : "N/A";
 }
 
 /// <summary>

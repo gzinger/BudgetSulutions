@@ -1,0 +1,359 @@
+{
+  "Mappings": [
+    {
+      "Pattern": "Wikimedia",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Non-Profit",
+      "Provider": "Wikimedia"
+    },
+    {
+      "Pattern": "GOOGLE.*YouTube|YouTube",
+      "Category": "Other",
+      "Subcategory": "Entertainment",
+      "Provider": "YouTube"
+    },
+    {
+      "Pattern": "DEPT EDUCATION|STUDENT LN",
+      "Category": "Financial",
+      "Subcategory": "Payment",
+      "Provider": "Dept of Education"
+    },
+    {
+      "Pattern": "NORTHWESTERN MU",
+      "Category": "Insurance",
+      "Subcategory": "Life",
+      "Provider": "Northwestern Mutual"
+    },
+    {
+      "Pattern": "WITHDRAWAL \\d+/\\d+",
+      "Category": "Financial",
+      "Subcategory": "ATM",
+      "Provider": "Chase"
+    },
+    {
+      "Pattern": "CHECK \\d+",
+      "Category": "Financial",
+      "Subcategory": "Payment",
+      "Provider": "Check"
+    },
+    {
+      "Pattern": "Amazon Prime",
+      "Category": "Shopping",
+      "Subcategory": "Subscription",
+      "Provider": "Amazon Prime"
+    },
+    {
+      "Pattern": "IN \\*J LEAGUES",
+      "Category": "Other",
+      "Subcategory": "Entertainment",
+      "Provider": "J Leagues"
+    },
+    {
+      "Pattern": "CHASE_TO_PARTNERFI",
+      "Category": "Financial",
+      "Subcategory": "Transfer",
+      "Provider": "Chase"
+    },
+    {
+      "Pattern": "QUICKPAY",
+      "Category": "Financial",
+      "Subcategory": "Transfer",
+      "Provider": "Chase"
+    },
+    {
+      "Pattern": "TEMU\\.COM.*WWW\\.TEMU\\.COM",
+      "Category": "Shopping",
+      "Subcategory": "clothing",
+      "Provider": "TEMU"
+    },
+    {
+      "Pattern": "HOUZZ.*INC\\..*SHOP",
+      "Category": "Shopping",
+      "Subcategory": "Home Goods",
+      "Provider": "Houzz"
+    },
+    {
+      "Pattern": "ALLSTATE.*INS.*INS",
+      "Category": "Insurance",
+      "Subcategory": "Car Insurance",
+      "Provider": "ALLSTATE INS"
+    },
+    {
+      "Pattern": "Cash.*Redemption",
+      "Category": "Financial",
+      "Subcategory": "Other",
+      "Provider": "Cash Redemption"
+    },
+    {
+      "Pattern": "GOLDEN.*KEY.*CORP",
+      "Category": "Groceries",
+      "Subcategory": "Produce",
+      "Provider": "GOLDEN KEY"
+    },
+    {
+      "Pattern": "ACH.*NYS.*HTFC",
+      "Category": "Income",
+      "Subcategory": "Housing/Rent",
+      "Provider": "ACH NYS HTFC HCV Vendor Pmt"
+    },
+    {
+      "Pattern": "REMOTE.*ONLINE.*DEPOSIT",
+      "Category": "Income",
+      "Subcategory": "Deposit",
+      "Provider": "Remote Online Deposit"
+    },
+    {
+      "Pattern": "NEPTUNE.*ROOFTOP.*NEW",
+      "Category": "Transportation",
+      "Subcategory": "Parking",
+      "Provider": "NEPTUNE ROOFTOP NEW YORK NY"
+    },
+    {
+      "Pattern": "ATM.*CASH.*DEPOSIT",
+      "Category": "Financial",
+      "Subcategory": "ATM",
+      "Provider": "ATM Cash Deposit"
+    },
+    {
+      "Pattern": "NET.*COST.*3100",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Net Cost"
+    },
+    {
+      "Pattern": "LUCKY.*OCEAN.*DISCOUNT",
+      "Category": "Shopping",
+      "Subcategory": "Discount Store",
+      "Provider": "Lucky Ocean"
+    },
+    {
+      "Pattern": "BERGDORFGOODMAN\\.COM.*DALLAS",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "Bergdorf Goodman"
+    },
+    {
+      "Pattern": "Wise.*888",
+      "Category": "Financial",
+      "Subcategory": "Transfer",
+      "Provider": "Wise"
+    },
+    {
+      "Pattern": "THECHILDRENSPLACE\\.COM.*201.*558",
+      "Category": "Shopping",
+      "Subcategory": "clothing",
+      "Provider": "The Children's Place"
+    },
+    {
+      "Pattern": "TARGET\\.COM.*800.*591",
+      "Category": "Shopping",
+      "Subcategory": "Online Shopping",
+      "Provider": "Target"
+    },
+    {
+      "Pattern": "ZENNI.*OPTICAL.*800",
+      "Category": "Health & Wellness",
+      "Subcategory": "Eyewear",
+      "Provider": "ZENNI OPTICAL"
+    },
+    {
+      "Pattern": "EXTENSIS\\s+PAYROLL",
+      "Category": "Income",
+      "Subcategory": "Salary",
+      "Provider": "Extensis"
+    },
+    {
+      "Pattern": "Ezer L'Cholim.*DIRDEP",
+      "Category": "Income",
+      "Subcategory": "Salary",
+      "Provider": "Ezer L'Cholim"
+    },
+    {
+      "Pattern": "TRUIST MORTG|MORTGAGE",
+      "Category": "Housing",
+      "Subcategory": "Mortgage",
+      "Provider": "Truist"
+    },
+    {
+      "Pattern": "Prospect Park Ye",
+      "Category": "Housing",
+      "Subcategory": "Rent",
+      "Provider": "Prospect Park"
+    },
+    {
+      "Pattern": "GLICNY|GLIC",
+      "Category": "Insurance",
+      "Subcategory": "Life",
+      "Provider": "Guardian Life"
+    },
+    {
+      "Pattern": "SageSure|SAGESURE",
+      "Category": "Insurance",
+      "Subcategory": "Home",
+      "Provider": "SageSure"
+    },
+    {
+      "Pattern": "Kindle",
+      "Category": "Shopping",
+      "Subcategory": "Online",
+      "Provider": "Amazon Kindle"
+    },
+    {
+      "Pattern": "SP STANLEY",
+      "Category": "Shopping",
+      "Subcategory": "Retail",
+      "Provider": "Stanley"
+    },
+    {
+      "Pattern": "MOUNTAIN FRUITS",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Mountain Fruits"
+    },
+    {
+      "Pattern": "KOSHER PALACE",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Kosher Palace"
+    },
+    {
+      "Pattern": "BINGO WHOLESALE",
+      "Category": "Groceries",
+      "Subcategory": "Wholesale",
+      "Provider": "Bingo Wholesale"
+    },
+    {
+      "Pattern": "TWINS MARKET",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Twins Market"
+    },
+    {
+      "Pattern": "PRODUCE MARKET",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Produce Market 2000"
+    },
+    {
+      "Pattern": "OCEAN FRUIT",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Ocean Fruit"
+    },
+    {
+      "Pattern": "YESHIVA|Yeshiva",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Education",
+      "Provider": ""
+    },
+    {
+      "Pattern": "CHABAD|Chabad",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Religious",
+      "Provider": ""
+    },
+    {
+      "Pattern": "HEBRON FUND",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Charity",
+      "Provider": "Hebron Fund"
+    },
+    {
+      "Pattern": "Israel Children Cancer",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Charity",
+      "Provider": "Israel Children Cancer"
+    },
+    {
+      "Pattern": "CHESEDTODAY",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Charity",
+      "Provider": "ChesedToday"
+    },
+    {
+      "Pattern": "YAD L'ACHIM",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Charity",
+      "Provider": "Yad L'Achim"
+    },
+    {
+      "Pattern": "Chofetz Chaim",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Religious",
+      "Provider": "Chofetz Chaim Heritage"
+    },
+    {
+      "Pattern": "Feed Israel",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Charity",
+      "Provider": "Feed Israel"
+    },
+    {
+      "Pattern": "YOUNG ISRAEL|Young Israel",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Religious",
+      "Provider": "Young Israel"
+    },
+    {
+      "Pattern": "Congregation|CONGREGATION",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Religious",
+      "Provider": ""
+    },
+    {
+      "Pattern": "GoFundMe",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Charity",
+      "Provider": "GoFundMe"
+    },
+    {
+      "Pattern": "TikvaChildrensHo",
+      "Category": "Gifts & Donations",
+      "Subcategory": "Charity",
+      "Provider": "Tikva Children's Home"
+    },
+    {
+      "Pattern": "BRICK OVEN|PIZZA|RESTAURANT",
+      "Category": "Food & Dining",
+      "Subcategory": "Restaurant",
+      "Provider": ""
+    },
+    {
+      "Pattern": "THE CIRCLE",
+      "Category": "Food & Dining",
+      "Subcategory": "Restaurant",
+      "Provider": "The Circle"
+    },
+    {
+      "Pattern": "BENNY.*BRICK OVEN",
+      "Category": "Food & Dining",
+      "Subcategory": "Restaurant",
+      "Provider": "Benny's Brick Oven"
+    },
+    {
+      "Pattern": "LAUNDRY",
+      "Category": "Other",
+      "Subcategory": "Services",
+      "Provider": ""
+    },
+    {
+      "Pattern": "HILA",
+      "Category": "Other",
+      "Subcategory": "Services",
+      "Provider": "Hila"
+    },
+    {
+      "Pattern": "PHARMACY|HEALTH|VOORHIES",
+      "Category": "Health & Wellness",
+      "Subcategory": "Pharmacy",
+      "Provider": ""
+    },
+    {
+      "Pattern": "BERMAN BOOKS|JUDAICA|MEKOR",
+      "Category": "Shopping",
+      "Subcategory": "Books",
+      "Provider": ""
+    }
+  ],
+  "LastUpdated": "2026-01-04T12:49:16.8787164-05:00"
+}

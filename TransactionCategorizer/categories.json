@@ -1,0 +1,53 @@
+{
+  "categories": [
+    {
+      "name": "Income",
+      "subcategories": ["Salary", "Interest", "Refund", "Other"]
+    },
+    {
+      "name": "Housing",
+      "subcategories": ["Mortgage", "Rent", "HOA", "Repairs", "Other"]
+    },
+    {
+      "name": "Utilities",
+      "subcategories": ["Electric", "Gas", "Water", "Internet/Cable", "Phone"]
+    },
+    {
+      "name": "Transportation",
+      "subcategories": ["Gas/Fuel", "Tolls", "Parking", "Public Transit", "Other"]
+    },
+    {
+      "name": "Groceries",
+      "subcategories": ["Supermarket", "Specialty", "Wholesale", "Other"]
+    },
+    {
+      "name": "Food & Dining",
+      "subcategories": ["Restaurant", "Fast Food", "Takeout", "Coffee", "Other"]
+    },
+    {
+      "name": "Shopping",
+      "subcategories": ["Online", "Retail", "Office Supplies", "Books", "Other"]
+    },
+    {
+      "name": "Health & Wellness",
+      "subcategories": ["Pharmacy", "Medical", "Dental", "Fitness", "Other"]
+    },
+    {
+      "name": "Insurance",
+      "subcategories": ["Life", "Home", "Auto", "Health", "Other"]
+    },
+    {
+      "name": "Gifts & Donations",
+      "subcategories": ["Religious", "Charity", "Education", "Gifts", "Other"]
+    },
+    {
+      "name": "Financial",
+      "subcategories": ["Transfer", "Payment", "Fee", "ATM", "Other"]
+    },
+    {
+      "name": "Other",
+      "subcategories": ["Entertainment", "Services", "Personal", "Miscellaneous", "Uncategorized"]
+    }
+  ],
+  "lastUpdated": "2025-01-01T00:00:00"
+}

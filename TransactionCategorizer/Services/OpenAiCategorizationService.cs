@@ -12,13 +12,28 @@ public class OpenAiCategorizationService : IAiCategorizationService
 {
     private readonly ChatClient _chatClient;
     private readonly string _mappingsFilePath;
+    private readonly ConfigurationService _configService;
+    private readonly string _configDirectory;
 
     private string GetSystemPrompt()
     {
         var sb = new System.Text.StringBuilder();
         sb.AppendLine("You are a financial transaction categorizer. Given a bank or credit card transaction description, determine:");
-        sb.AppendLine("1. Category (e.g., Utilities, Transportation, Groceries, Shopping, Food & Drink, Gifts & Donations, Income, Transfers, Housing, Insurance, Health & Wellness, Entertainment, Services, Bills & Utilities, Credit Card, Loans, Cash, Other)");
-        sb.AppendLine("2. Subcategory (more specific, e.g., Electrical, Gas, Tolls, Supermarket, Online Shopping, etc.)");
+        sb.AppendLine("1. Category - must be one of the following:");
+        
+        // Load categories from configuration
+        var categories = _configService.LoadCategories(_configDirectory);
+        foreach (var cat in categories.Categories)
+        {
+            sb.AppendLine($"   - {cat.Name}");
+            if (cat.Subcategories.Count > 0)
+            {
+                sb.AppendLine($"     Subcategories: {string.Join(", ", cat.Subcategories)}");
+            }
+        }
+        
+        sb.AppendLine();
+        sb.AppendLine("2. Subcategory (choose from the list above for the selected category, or create a relevant one)");
         sb.AppendLine("3. Provider/Merchant name (clean, readable name)");
         sb.AppendLine("4. Confidence (0.0 to 1.0)");
         sb.AppendLine();
@@ -62,9 +77,11 @@ public class OpenAiCategorizationService : IAiCategorizationService
         return new List<CategoryMapping>();
     }
 
-    public OpenAiCategorizationService(string apiKey, string? endpoint = null, string model = "gpt-4o-mini", string? mappingsFilePath = null)
+    public OpenAiCategorizationService(string apiKey, ConfigurationService configService, string configDirectory, string? endpoint = null, string model = "gpt-4o-mini", string? mappingsFilePath = null)
     {
         _mappingsFilePath = mappingsFilePath ?? string.Empty;
+        _configService = configService;
+        _configDirectory = configDirectory;
 
         if (!string.IsNullOrEmpty(endpoint))
         {
