@@ -2,51 +2,279 @@
   "categories": [
     {
       "name": "Income",
-      "subcategories": ["Salary", "Interest", "Refund", "Other"]
+      "subcategories": [ "Salary", "Interest", "Refund", "Housing/Rent" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Salary",
+          "keywords": [ "payroll", "salary", "wages" ]
+        },
+        {
+          "subcategory": "Interest",
+          "keywords": [ "interest" ]
+        },
+        {
+          "subcategory": "Refund",
+          "keywords": [ "refund", "return", "credit return" ]
+        }
+      ]
     },
     {
       "name": "Housing",
-      "subcategories": ["Mortgage", "Rent", "HOA", "Repairs", "Other"]
+      "subcategories": [ "Mortgage", "Rent", "Taxes", "Repairs", "Insurance" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Mortgage",
+          "keywords": [ "mortgage", "mortg" ]
+        },
+        {
+          "subcategory": "Rent",
+          "keywords": [ "rent", "rental" ]
+        },
+        {
+          "subcategory": "Taxes",
+          "keywords": [ "tax"]
+        }
+      ]
     },
     {
       "name": "Utilities",
-      "subcategories": ["Electric", "Gas", "Water", "Internet/Cable", "Phone"]
+      "subcategories": [ "Electric", "Gas", "Water", "Internet/Cable", "Phone" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Electric",
+          "keywords": [ "electric", "electricity", "power", "con ed", "consolidated edison" ]
+        },
+        {
+          "subcategory": "Gas",
+          "keywords": [ "national grid", "keyspan", "gas utility" ]
+        },
+        {
+          "subcategory": "Water",
+          "keywords": [ "water", "sewer" ]
+        },
+        {
+          "subcategory": "Internet/Cable",
+          "keywords": [ "optimum", "internet", "cable", "broadband", "spectrum", "comcast" ]
+        },
+        {
+          "subcategory": "Phone",
+          "keywords": [ "phone", "ooma", "verizon wireless", "t-mobile", "at&t" ]
+        }
+      ]
     },
     {
       "name": "Transportation",
-      "subcategories": ["Gas/Fuel", "Tolls", "Parking", "Public Transit", "Other"]
+      "subcategories": [ "Gas/Fuel", "Tolls", "Parking", "Public Transit", "Other" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Gas/Fuel",
+          "keywords": [ "gas", "fuel", "sunoco", "exxon", "shell", "bp", "mobil", "chevron" ]
+        },
+        {
+          "subcategory": "Tolls",
+          "keywords": [ "toll", "ez-pass", "ezpass" ]
+        },
+        {
+          "subcategory": "Parking",
+          "keywords": [ "parking", "park" ]
+        },
+        {
+          "subcategory": "Public Transit",
+          "keywords": [ "subway", "bus", "metro", "train", "transit" ]
+        }
+      ]
     },
     {
       "name": "Groceries",
-      "subcategories": ["Supermarket", "Specialty", "Wholesale", "Other"]
+      "subcategories": [ "Supermarket", "Specialty", "Wholesale", "Produce" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Supermarket",
+          "keywords": [ "supermarket", "market", "grocery" ]
+        },
+        {
+          "subcategory": "Wholesale",
+          "keywords": [ "wholesale", "costco", "bjs", "sam's club" ]
+        },
+        {
+          "subcategory": "Specialty",
+          "keywords": [ "specialty", "organic", "natural" ]
+        }
+      ]
     },
     {
       "name": "Food & Dining",
-      "subcategories": ["Restaurant", "Fast Food", "Takeout", "Coffee", "Other"]
+      "subcategories": [ "Restaurant", "Fast Food", "Takeout", "Coffee", "Other" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Restaurant",
+          "keywords": [ "restaurant", "dining", "bistro", "cafe", "grill" ]
+        },
+        {
+          "subcategory": "Fast Food",
+          "keywords": [ "mcdonald", "burger king", "wendy", "taco bell", "kfc", "subway" ]
+        },
+        {
+          "subcategory": "Takeout",
+          "keywords": [ "takeout", "delivery", "doordash", "uber eats", "grubhub" ]
+        },
+        {
+          "subcategory": "Coffee",
+          "keywords": [ "starbucks", "dunkin", "coffee", "espresso" ]
+        }
+      ]
     },
     {
       "name": "Shopping",
-      "subcategories": ["Online", "Retail", "Office Supplies", "Books", "Other"]
+      "subcategories": [ "Online", "Retail", "Office Supplies", "Books", "Subscription", "Home Goods", "Clothing", "Discount Store" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Online",
+          "keywords": [ "amazon", "amzn", "ebay", ".com", "online" ]
+        },
+        {
+          "subcategory": "Office Supplies",
+          "keywords": [ "staples", "office depot", "office" ]
+        },
+        {
+          "subcategory": "Books",
+          "keywords": [ "book", "barnes", "judaica" ]
+        }
+      ]
     },
     {
       "name": "Health & Wellness",
-      "subcategories": ["Pharmacy", "Medical", "Dental", "Fitness", "Other"]
+      "subcategories": [ "Pharmacy", "Medical", "Dental", "Fitness", "Eyewear" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Pharmacy",
+          "keywords": [ "pharmacy", "cvs", "walgreens", "rite aid", "prescription" ]
+        },
+        {
+          "subcategory": "Medical",
+          "keywords": [ "medical", "doctor", "hospital", "clinic", "health" ]
+        },
+        {
+          "subcategory": "Dental",
+          "keywords": [ "dental", "dentist", "orthodont" ]
+        },
+        {
+          "subcategory": "Fitness",
+          "keywords": [ "gym", "fitness", "yoga", "trainer" ]
+        }
+      ]
     },
     {
       "name": "Insurance",
-      "subcategories": ["Life", "Home", "Auto", "Health", "Other"]
+      "subcategories": [ "Life", "Home", "Auto", "Health", "Other" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Life",
+          "keywords": [ "life insurance", "term life" ]
+        },
+        {
+          "subcategory": "Home",
+          "keywords": [ "home insurance", "homeowner", "property insurance" ]
+        },
+        {
+          "subcategory": "Auto",
+          "keywords": [ "auto insurance", "car insurance", "vehicle insurance" ]
+        },
+        {
+          "subcategory": "Health",
+          "keywords": [ "health insurance", "medical insurance" ]
+        }
+      ]
     },
     {
       "name": "Gifts & Donations",
-      "subcategories": ["Religious", "Charity", "Education", "Gifts", "Other"]
+      "subcategories": [ "Religious", "Charity", "Gifts", "Non-Profit" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Religious",
+          "keywords": [ "church", "synagogue", "temple", "mosque", "religious", "congregation", "chabad" ]
+        },
+        {
+          "subcategory": "Charity",
+          "keywords": [ "charity", "donation", "gofundme", "fund", "relief" ]
+        },
+        {
+          "subcategory": "Gifts",
+          "keywords": [ "gift", "present" ]
+        }
+      ]
+    },
+    {
+      "name": "Education",
+      "subcategories": [ "School", "University", "Training" ],
+      "inferenceRules": [
+        {
+          "subcategory": "School",
+          "keywords": [ "Prospect Park Ye", "Yeshiva" ]
+        },
+        {
+          "subcategory": "University",
+          "keywords": [ "Touro" ]
+        }
+      ]
+    },
+    {
+      "name": "Entertainment",
+      "subcategories": [ "Movies", "Music", "Games", "Magazines" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Movies",
+          "keywords": [ "movie", "film", "cinema", "netflix", "YouTube" ]
+        },
+        {
+          "subcategory": "Music",
+          "keywords": [ "music", "album", "song", "spotify" ]
+        },
+        {
+          "subcategory": "Games",
+          "keywords": [ "game", "gaming", "console" ]
+        }
+      ]
     },
     {
       "name": "Financial",
-      "subcategories": ["Transfer", "Payment", "Fee", "ATM", "Other"]
+      "subcategories": [ "Transfer", "Payment", "Fee", "ATM", "Loan" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Transfer",
+          "keywords": [ "transfer", "zelle", "venmo", "paypal", "wire" ]
+        },
+        {
+          "subcategory": "Payment",
+          "keywords": [ "payment", "autopay", "bill pay" ]
+        },
+        {
+          "subcategory": "Fee",
+          "keywords": [ "fee", "charge", "service charge" ]
+        },
+        {
+          "subcategory": "ATM",
+          "keywords": [ "atm", "withdrawal", "cash" ]
+        },
+        {
+          "subcategory": "Loan",
+          "keywords": [ "loan", "student loan", "auto loan", "personal loan", "st loan" ]
+        }
+      ]
     },
     {
       "name": "Other",
-      "subcategories": ["Entertainment", "Services", "Personal", "Miscellaneous", "Uncategorized"]
+      "subcategories": [ "Services", "Uncategorized" ],
+      "inferenceRules": [
+        {
+          "subcategory": "Services",
+          "keywords": [ "service", "laundry", "cleaning", "repair" ]
+        },
+        {
+          "subcategory": "Personal",
+          "keywords": [ "personal", "haircut", "salon", "spa", "barber" ]
+        }
+      ]
     }
   ],
   "lastUpdated": "2025-01-01T00:00:00"

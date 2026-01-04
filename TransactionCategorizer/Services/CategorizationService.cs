@@ -473,29 +473,29 @@ public class CategorizationService
 
     private string DetermineSubcategory(Transaction transaction)
     {
-        // Try to determine subcategory from category and description
-        var category = transaction.Category.ToLower();
-        var desc = transaction.Description.ToLower();
+        // Find the category definition
+        var categoryDef = _categoriesConfig.Categories.FirstOrDefault(c => 
+            c.Name.Equals(transaction.Category, StringComparison.OrdinalIgnoreCase));
 
-        return category switch
+        if (categoryDef == null)
+            return "Other";
+
+        // If category has inference rules, try to match keywords
+        if (categoryDef.InferenceRules != null && categoryDef.InferenceRules.Count > 0)
         {
-            "shopping" when desc.Contains("amazon") || desc.Contains("amzn") => "Online Shopping",
-            "shopping" when desc.Contains("book") || desc.Contains("judaica") => "Books/Religious Items",
-            "groceries" => "Supermarket",
-            "gifts & donations" when desc.Contains("yeshiva") => "Religious/Education",
-            "gifts & donations" => "Charity",
-            "bills & utilities" when desc.Contains("optimum") || desc.Contains("internet") => "Internet/Cable",
-            "bills & utilities" when desc.Contains("phone") || desc.Contains("ooma") => "Phone",
-            "bills & utilities" => "General",
-            "food & drink" => "Restaurant",
-            "travel" when desc.Contains("parking") => "Parking",
-            "travel" when desc.Contains("gas") || desc.Contains("sunoco") => "Gas",
-            "health & wellness" => "Medical",
-            "entertainment" => "Recreation",
-            "professional services" => "Services",
-            "personal" => "Personal Care",
-            "gas" => "Fuel",
-            _ => "General"
-        };
+            var descLower = transaction.Description.ToLower();
+            
+            foreach (var rule in categoryDef.InferenceRules)
+            {
+                // Check if any keyword matches
+                if (rule.Keywords.Any(keyword => descLower.Contains(keyword.ToLower())))
+                {
+                    return rule.Subcategory;
+                }
+            }
+        }
+
+        // Fallback to first subcategory or "Other"
+        return categoryDef.Subcategories.FirstOrDefault() ?? "Other";
     }
 }

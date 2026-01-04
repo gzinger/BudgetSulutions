@@ -7,12 +7,6 @@
       "Provider": "Wikimedia"
     },
     {
-      "Pattern": "GOOGLE.*YouTube|YouTube",
-      "Category": "Other",
-      "Subcategory": "Entertainment",
-      "Provider": "YouTube"
-    },
-    {
       "Pattern": "DEPT EDUCATION|STUDENT LN",
       "Category": "Financial",
       "Subcategory": "Payment",
@@ -63,7 +57,7 @@
     {
       "Pattern": "TEMU\\.COM.*WWW\\.TEMU\\.COM",
       "Category": "Shopping",
-      "Subcategory": "clothing",
+      "Subcategory": "Clothing",
       "Provider": "TEMU"
     },
     {
@@ -147,7 +141,7 @@
     {
       "Pattern": "TARGET\\.COM.*800.*591",
       "Category": "Shopping",
-      "Subcategory": "Online Shopping",
+      "Subcategory": "Online",
       "Provider": "Target"
     },
     {
@@ -172,12 +166,12 @@
       "Pattern": "TRUIST MORTG|MORTGAGE",
       "Category": "Housing",
       "Subcategory": "Mortgage",
-      "Provider": "Truist"
+      "Provider": "Truist MORTG"
     },
     {
       "Pattern": "Prospect Park Ye",
-      "Category": "Housing",
-      "Subcategory": "Rent",
+      "Category": "Education",
+      "Subcategory": "School",
       "Provider": "Prospect Park"
     },
     {
@@ -188,14 +182,14 @@
     },
     {
       "Pattern": "SageSure|SAGESURE",
-      "Category": "Insurance",
-      "Subcategory": "Home",
+      "Category": "Housing",
+      "Subcategory": "Insurance",
       "Provider": "SageSure"
     },
     {
       "Pattern": "Kindle",
       "Category": "Shopping",
-      "Subcategory": "Online",
+      "Subcategory": "Books",
       "Provider": "Amazon Kindle"
     },
     {
@@ -242,8 +236,8 @@
     },
     {
       "Pattern": "YESHIVA|Yeshiva",
-      "Category": "Gifts & Donations",
-      "Subcategory": "Education",
+      "Category": "Education",
+      "Subcategory": "School",
       "Provider": ""
     },
     {
@@ -320,8 +314,8 @@
     },
     {
       "Pattern": "THE CIRCLE",
-      "Category": "Food & Dining",
-      "Subcategory": "Restaurant",
+      "Category": "Entertainment",
+      "Subcategory": "Magazines",
       "Provider": "The Circle"
     },
     {
@@ -338,8 +332,8 @@
     },
     {
       "Pattern": "HILA",
-      "Category": "Other",
-      "Subcategory": "Services",
+      "Category": "Health & Wellness",
+      "Subcategory": "Medical",
       "Provider": "Hila"
     },
     {

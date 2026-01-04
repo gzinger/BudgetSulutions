@@ -24,12 +24,26 @@ Defines your category hierarchy with up to 12 main categories and up to 5 subcat
   "categories": [
     {
       "name": "Income",
-      "subcategories": ["Salary", "Interest", "Refund", "Other"]
+      "subcategories": ["Salary", "Interest", "Refund", "Other"],
+      "inferenceRules": [
+        {
+          "subcategory": "Salary",
+          "keywords": ["payroll", "salary", "wages"]
+        },
+        {
+          "subcategory": "Interest",
+          "keywords": ["interest"]
+        }
+      ]
     },
     ...
   ]
 }
 ```
+
+**Inference Rules**: Each category can have optional inference rules that automatically determine the subcategory based on keywords in the transaction description. This is used when transactions have a category but no subcategory (common with credit card CSV files).
+
+For example, if a transaction has category "Income" but no subcategory, and the description contains "payroll", it will automatically be assigned the "Salary" subcategory.
 
 The default categories are:
 1. **Income** - Salary, Interest, Refund, Other
@@ -189,6 +203,56 @@ The application generates:
 4. **Review suggestions**: Always review AI suggestions before accepting
 5. **Organize subcategories**: Keep subcategories specific but not too granular
 6. **Backup your mappings**: Regularly backup `category_mappings.json` - it contains all your learned patterns
+
+## Customizing Categories
+
+Edit `categories.json` to customize your category structure:
+
+```json
+{
+  "categories": [
+    {
+      "name": "Your Custom Category",
+      "subcategories": ["Sub1", "Sub2", "Sub3"],
+      "inferenceRules": [
+        {
+          "subcategory": "Sub1",
+          "keywords": ["keyword1", "keyword2"]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Adding Inference Rules
+
+Inference rules help automatically assign subcategories based on keywords in transaction descriptions. This is especially useful for transactions that come with a category but no subcategory (common in credit card CSVs).
+
+**Example**: To automatically categorize parking transactions:
+```json
+{
+  "name": "Transportation",
+  "subcategories": ["Gas/Fuel", "Tolls", "Parking", "Other"],
+  "inferenceRules": [
+    {
+      "subcategory": "Parking",
+      "keywords": ["parking", "park", "garage"]
+    }
+  ]
+}
+```
+
+When a transaction with category "Transportation" contains "parking" in its description, it will automatically be assigned the "Parking" subcategory.
+
+**Tips for Inference Rules:**
+- Keywords are case-insensitive
+- Keywords are matched using "contains" logic
+- More specific keywords should come before general ones
+- If multiple rules match, the first matching rule wins
+- Use partial words for better matching (e.g., "park" matches "parking", "parked", "park")
+
+Changes take effect immediately on next run.
 
 ## Troubleshooting
 
