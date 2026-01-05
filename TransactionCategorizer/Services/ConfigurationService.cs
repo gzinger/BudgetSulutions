@@ -153,17 +153,34 @@ public class ConfigurationService
             try
             {
                 var json = File.ReadAllText(categoriesPath);
-                _categories = JsonSerializer.Deserialize<CategoriesConfiguration>(json);
-                if (_categories != null)
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                _categories = JsonSerializer.Deserialize<CategoriesConfiguration>(json, options);
+                if (_categories != null && _categories.Categories != null && _categories.Categories.Count > 0)
+                {
+                    Console.WriteLine($"Loaded {_categories.Categories.Count} categories from configuration");
                     return _categories;
+                }
+                else
+                {
+                    Console.WriteLine("Categories configuration was empty or invalid");
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error loading categories: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
             }
         }
+        else
+        {
+            Console.WriteLine($"Categories file not found at: {categoriesPath}");
+        }
 
-        // Create default categories if file doesn't exist
+        // Create default categories if file doesn't exist or failed to load
+        Console.WriteLine("Creating default categories");
         _categories = CreateDefaultCategories();
         SaveCategories(configDirectory);
         return _categories;

@@ -24,9 +24,15 @@ public class Transaction
     
     // For tracking categorization source
     public string CategorizationSource { get; set; } = string.Empty; // "Original", "Pattern", "AI", "User"
+    public string MatchedPattern { get; set; } = string.Empty; // The exact pattern that matched
     
     // Helper property for displaying balance
     public string BalanceDisplay => Balance.HasValue ? Balance.Value.ToString("C2") : "N/A";
+    
+    // Helper property for displaying categorization details
+    public string CategorizationDetails => string.IsNullOrEmpty(MatchedPattern) 
+        ? CategorizationSource 
+        : $"{CategorizationSource}: {MatchedPattern}";
 }
 
 /// <summary>

@@ -2,14 +2,14 @@
   "Mappings": [
     {
       "Pattern": "Wikimedia",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Non-Profit",
       "Provider": "Wikimedia"
     },
     {
       "Pattern": "DEPT EDUCATION|STUDENT LN",
-      "Category": "Financial",
-      "Subcategory": "Payment",
+      "Category": "Education",
+      "Subcategory": "University",
       "Provider": "Dept of Education"
     },
     {
@@ -19,13 +19,13 @@
       "Provider": "Northwestern Mutual"
     },
     {
-      "Pattern": "WITHDRAWAL \\d+/\\d+",
+      "Pattern": "WITHDRAWAL \\d\u002B/\\d\u002B",
       "Category": "Financial",
       "Subcategory": "ATM",
       "Provider": "Chase"
     },
     {
-      "Pattern": "CHECK \\d+",
+      "Pattern": "CHECK \\d\u002B",
       "Category": "Financial",
       "Subcategory": "Payment",
       "Provider": "Check"
@@ -97,6 +97,12 @@
       "Provider": "Remote Online Deposit"
     },
     {
+      "Pattern": "BP.* BP",
+      "Category": "Transportation",
+      "Subcategory": "Gas/Fuel",
+      "Provider": "BP"
+    },
+    {
       "Pattern": "NEPTUNE.*ROOFTOP.*NEW",
       "Category": "Transportation",
       "Subcategory": "Parking",
@@ -136,7 +142,7 @@
       "Pattern": "THECHILDRENSPLACE\\.COM.*201.*558",
       "Category": "Shopping",
       "Subcategory": "clothing",
-      "Provider": "The Children's Place"
+      "Provider": "The Children\u0027s Place"
     },
     {
       "Pattern": "TARGET\\.COM.*800.*591",
@@ -146,21 +152,21 @@
     },
     {
       "Pattern": "ZENNI.*OPTICAL.*800",
-      "Category": "Health & Wellness",
+      "Category": "Health \u0026 Wellness",
       "Subcategory": "Eyewear",
       "Provider": "ZENNI OPTICAL"
     },
     {
-      "Pattern": "EXTENSIS\\s+PAYROLL",
+      "Pattern": "EXTENSIS\\s\u002BPAYROLL",
       "Category": "Income",
       "Subcategory": "Salary",
       "Provider": "Extensis"
     },
     {
-      "Pattern": "Ezer L'Cholim.*DIRDEP",
+      "Pattern": "Ezer L\u0027Cholim.*DIRDEP",
       "Category": "Income",
       "Subcategory": "Salary",
-      "Provider": "Ezer L'Cholim"
+      "Provider": "Ezer L\u0027Cholim"
     },
     {
       "Pattern": "TRUIST MORTG|MORTGAGE",
@@ -242,73 +248,73 @@
     },
     {
       "Pattern": "CHABAD|Chabad",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Religious",
       "Provider": ""
     },
     {
       "Pattern": "HEBRON FUND",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Charity",
       "Provider": "Hebron Fund"
     },
     {
       "Pattern": "Israel Children Cancer",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Charity",
       "Provider": "Israel Children Cancer"
     },
     {
       "Pattern": "CHESEDTODAY",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Charity",
       "Provider": "ChesedToday"
     },
     {
-      "Pattern": "YAD L'ACHIM",
-      "Category": "Gifts & Donations",
+      "Pattern": "YAD L\u0027ACHIM",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Charity",
-      "Provider": "Yad L'Achim"
+      "Provider": "Yad L\u0027Achim"
     },
     {
       "Pattern": "Chofetz Chaim",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Religious",
       "Provider": "Chofetz Chaim Heritage"
     },
     {
       "Pattern": "Feed Israel",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Charity",
       "Provider": "Feed Israel"
     },
     {
       "Pattern": "YOUNG ISRAEL|Young Israel",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Religious",
       "Provider": "Young Israel"
     },
     {
       "Pattern": "Congregation|CONGREGATION",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Religious",
       "Provider": ""
     },
     {
       "Pattern": "GoFundMe",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Charity",
       "Provider": "GoFundMe"
     },
     {
       "Pattern": "TikvaChildrensHo",
-      "Category": "Gifts & Donations",
+      "Category": "Gifts \u0026 Donations",
       "Subcategory": "Charity",
-      "Provider": "Tikva Children's Home"
+      "Provider": "Tikva Children\u0027s Home"
     },
     {
       "Pattern": "BRICK OVEN|PIZZA|RESTAURANT",
-      "Category": "Food & Dining",
+      "Category": "Food \u0026 Dining",
       "Subcategory": "Restaurant",
       "Provider": ""
     },
@@ -320,9 +326,9 @@
     },
     {
       "Pattern": "BENNY.*BRICK OVEN",
-      "Category": "Food & Dining",
+      "Category": "Food \u0026 Dining",
       "Subcategory": "Restaurant",
-      "Provider": "Benny's Brick Oven"
+      "Provider": "Benny\u0027s Brick Oven"
     },
     {
       "Pattern": "LAUNDRY",
@@ -332,13 +338,13 @@
     },
     {
       "Pattern": "HILA",
-      "Category": "Health & Wellness",
+      "Category": "Health \u0026 Wellness",
       "Subcategory": "Medical",
       "Provider": "Hila"
     },
     {
       "Pattern": "PHARMACY|HEALTH|VOORHIES",
-      "Category": "Health & Wellness",
+      "Category": "Health \u0026 Wellness",
       "Subcategory": "Pharmacy",
       "Provider": ""
     },
@@ -347,7 +353,433 @@
       "Category": "Shopping",
       "Subcategory": "Books",
       "Provider": ""
+    },
+    {
+      "Pattern": "GOOGLE.*YouTube.*Vide",
+      "Category": "Entertainment",
+      "Subcategory": "Movies",
+      "Provider": "GOOGLE"
+    },
+    {
+      "Pattern": "TOLDOT\\.COM.*647.*551",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "TOLDOT"
+    },
+    {
+      "Pattern": "Online Payment .*To aish",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "aish"
+    },
+    {
+      "Pattern": "Online Payment .*To Chai Lifeline",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "Chai Lifeline"
+    },
+    {
+      "Pattern": "Online Payment .*To FREE",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "FREE"
+    },
+    {
+      "Pattern": "Online Payment .*To Hillel",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "Hillel"
+    },
+    {
+      "Pattern": "American Griends of Kupat",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "Kupat"
+    },
+    {
+      "Pattern": "american friends",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": ""
+    },
+    {
+      "Pattern": "GOWN.*SHADCHAN.*LISTIN",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "Gown Shadchan"
+    },
+    {
+      "Pattern": "TOURO.*COLLEGE.*TOURO",
+      "Category": "Education",
+      "Subcategory": "University",
+      "Provider": "Touro College"
+    },
+    {
+      "Pattern": "BERGDORFGOODMAN\\.COM.*888.*774",
+      "Category": "Shopping",
+      "Subcategory": "Retail",
+      "Provider": "Bergdorf Goodman"
+    },
+    {
+      "Pattern": "ANTHROPOLOGIE\\.COM.*HTTPSWWW\\.ANTH",
+      "Category": "Shopping",
+      "Subcategory": "Retail",
+      "Provider": "Anthropologie"
+    },
+    {
+      "Pattern": "CHERRY.*HILL.*GOURMET",
+      "Category": "Groceries",
+      "Subcategory": "Produce",
+      "Provider": "CHERRY HILL GOURMET BROOKLYN NY"
+    },
+    {
+      "Pattern": "ROSS.*SIMONS.*JEWELERS",
+      "Category": "Shopping",
+      "Subcategory": "Retail",
+      "Provider": "Ross-Simons Jewelers"
+    },
+    {
+      "Pattern": "MIKVAHCALENDAR\\.COM.*MIKVAHCALENDA",
+      "Category": "Health \u0026 Wellness",
+      "Subcategory": "Fitness",
+      "Provider": "MIKVAHCALENDAR"
+    },
+    {
+      "Pattern": "TST.*VERY.*JUICE",
+      "Category": "Food \u0026 Dining",
+      "Subcategory": "Fast Food",
+      "Provider": "TST"
+    },
+    {
+      "Pattern": "PIE.*AND.*FRIES",
+      "Category": "Food \u0026 Dining",
+      "Subcategory": "Restaurant",
+      "Provider": "Pie and Fries"
+    },
+    {
+      "Pattern": "MTA.*NYCT.*PAYGO",
+      "Category": "Transportation",
+      "Subcategory": "Public Transit",
+      "Provider": "MTA NYCT"
+    },
+    {
+      "Pattern": "MACYS.*HERALD.*SQUARE",
+      "Category": "Shopping",
+      "Subcategory": "Retail",
+      "Provider": "Macy\u0027s Herald Square"
+    },
+    {
+      "Pattern": "NYPRESMSCHILD.*GIFTSHOP.*NEW",
+      "Category": "Education",
+      "Subcategory": "School",
+      "Provider": "NYPRESMSCHILD GIFTSHOP NEW YORK NY"
+    },
+    {
+      "Pattern": "NEW.*YORK.*PRESBYTERIAN",
+      "Category": "Health \u0026 Wellness",
+      "Subcategory": "Medical",
+      "Provider": "New York Presbyterian"
+    },
+    {
+      "Pattern": "Matrix.*Trust.*PAYMENT",
+      "Category": "Financial",
+      "Subcategory": "Payment",
+      "Provider": "Matrix Trust Co"
+    },
+    {
+      "Pattern": "IRS.*USATAXPYMT",
+      "Category": "Financial",
+      "Subcategory": "Taxes",
+      "Provider": "IRS"
+    },
+    {
+      "Pattern": "AND.*KIDS.*BROOKLYN",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "S AND D KIDS"
+    },
+    {
+      "Pattern": "YADLACHIMPEYLIM.*718.*633",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "YADLACHIMPEYLIM"
+    },
+    {
+      "Pattern": "JUS.*JULIE.*BROOKLYN",
+      "Category": "Food \u0026 Dining",
+      "Subcategory": "Other",
+      "Provider": "Jus By Julie"
+    },
+    {
+      "Pattern": "OELS,.*PAY.*1691",
+      "Category": "Income",
+      "Subcategory": "Deposit",
+      "Provider": "OELS"
+    },
+    {
+      "Pattern": "MODERN.*REMEDIES.*BROOKLYN",
+      "Category": "Health \u0026 Wellness",
+      "Subcategory": "Pharmacy",
+      "Provider": "Modern Remedies"
+    },
+    {
+      "Pattern": "STATE.*NYSTTAXRFD",
+      "Category": "Income",
+      "Subcategory": "Refund",
+      "Provider": "NY State Tax Refund"
+    },
+    {
+      "Pattern": "Nike\\.com.*800",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "Nike"
+    },
+    {
+      "Pattern": "Reversal:.*FULLSTAR.*SINGAPORE",
+      "Category": "Financial",
+      "Subcategory": "Refund",
+      "Provider": "Fullstar Singapore"
+    },
+    {
+      "Pattern": "lightinthebox\\.com.*INTERNET",
+      "Category": "Shopping",
+      "Subcategory": "Online",
+      "Provider": "LightInTheBox"
+    },
+    {
+      "Pattern": "FACTS.*FACTS",
+      "Category": "Education",
+      "Subcategory": "School",
+      "Provider": "FACTS            FACTS"
+    },
+    {
+      "Pattern": "IHERB.*IHERB\\.COM.*",
+      "Category": "Health \u0026 Wellness",
+      "Subcategory": "Pharmacy",
+      "Provider": "IHERB IHERB"
+    },
+    {
+      "Pattern": "FOXS.*BROOKLYN.*718",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "FOXS OF"
+    },
+    {
+      "Pattern": "FULLSTAR.*SINGAPORE",
+      "Category": "Other",
+      "Subcategory": "Uncategorized",
+      "Provider": "FULLSTAR SINGAPORE"
+    },
+    {
+      "Pattern": "SUSHI.*MESHUGA.*BROOKLYN",
+      "Category": "Food \u0026 Dining",
+      "Subcategory": "Restaurant",
+      "Provider": "Sushi Meshuga"
+    },
+    {
+      "Pattern": "SHLOIME.*HEIMISH.*BAKERY",
+      "Category": "Groceries",
+      "Subcategory": "Specialty",
+      "Provider": "SHLOIME HEIMISH BAKERY BROOKLYN NY"
+    },
+    {
+      "Pattern": "MEHADRIN.*SUPERMARKET.*BROOKLYN",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Mehadrin Supermarket"
+    },
+    {
+      "Pattern": "FOOD.*STORE.*CORP",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "B \u0026 O Food Store Corp"
+    },
+    {
+      "Pattern": "KAFILOE\\.COM.*WANCGAI",
+      "Category": "Shopping",
+      "Subcategory": "Online",
+      "Provider": "Kafiloe.com"
+    },
+    {
+      "Pattern": "FACTORY\\.COM.*2624.*844",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "BR FACTORY"
+    },
+    {
+      "Pattern": "NYS.*DTF.*Tax",
+      "Category": "Housing",
+      "Subcategory": "Taxes",
+      "Provider": "NYS DTF"
+    },
+    {
+      "Pattern": "Online Payment .* To NYC DOF PROPERTY TAX",
+      "Category": "Housing",
+      "Subcategory": "Taxes",
+      "Provider": "PROPERTY TAX"
+    },
+    {
+      "Pattern": "UA\\.COM.*888.*727",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "Under Armour"
+    },
+    {
+      "Pattern": "CHESEDFUND.*OHR.*HATOR",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Non-Profit",
+      "Provider": "Cheesed Fund"
+    },
+    {
+      "Pattern": "ALDI.*73009.*BROOKLYN",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "ALDI"
+    },
+    {
+      "Pattern": "RITE.*AID.*04876",
+      "Category": "Health \u0026 Wellness",
+      "Subcategory": "Pharmacy",
+      "Provider": "Rite Aid"
+    },
+    {
+      "Pattern": "LOLELIFE\\.COM.*HTTPSCHECKOUT",
+      "Category": "Shopping",
+      "Subcategory": "Online",
+      "Provider": "SP LOLELIFE.COM"
+    },
+    {
+      "Pattern": "MANHATTAN.*BEACH.*MIKVEH",
+      "Category": "Health \u0026 Wellness",
+      "Subcategory": "Fitness",
+      "Provider": "MANHATTAN BEACH MIKVEH BROOKLYN NY"
+    },
+    {
+      "Pattern": "FOREIGN.*EXCHANGE.*RATE",
+      "Category": "Financial",
+      "Subcategory": "Fee",
+      "Provider": "Wolt"
+    },
+    {
+      "Pattern": "WOLT.*ENTERPRISES.*ISR",
+      "Category": "Food \u0026 Dining",
+      "Subcategory": "Takeout",
+      "Provider": "Wolt Enterprises"
+    },
+    {
+      "Pattern": "CHARIDY.*EZER.*MIZION",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Charity",
+      "Provider": "Charidy Ezer Mizion"
+    },
+    {
+      "Pattern": "CHESEDFUND.*RESCUE.*HTTPSTHECHESE",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "CHESEDFUND-RESCUE TH HTTPSTHECHESE AR"
+    },
+    {
+      "Pattern": "CHESEDFUND.*THANKYOUV.*HTTPSTHECHESE",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Charity",
+      "Provider": "Cheesed Fund"
+    },
+    {
+      "Pattern": "SPYSCAPE.*SPYSCAPE\\.COM",
+      "Category": "Entertainment",
+      "Subcategory": "Other",
+      "Provider": "SPYSCAPE"
+    },
+    {
+      "Pattern": "ORGANICS.*APO.*619",
+      "Category": "Groceries",
+      "Subcategory": "Specialty",
+      "Provider": "I \u0026 E Organics"
+    },
+    {
+      "Pattern": "OCEAN.*CHEMISTS.*BROOKLYN",
+      "Category": "Shopping",
+      "Subcategory": "Home Goods",
+      "Provider": "Ocean Chemists"
+    },
+    {
+      "Pattern": "FREDDY\u0060S.*GOURMET.*MARKET",
+      "Category": "Groceries",
+      "Subcategory": "Specialty",
+      "Provider": "Freddy\u0027s Gourmet Market"
+    },
+    {
+      "Pattern": "PAYPAL.*INST.*XFER",
+      "Category": "Financial",
+      "Subcategory": "Transfer",
+      "Provider": "GoDaddy"
+    },
+    {
+      "Pattern": "PEER.*HASTAM.*BENY",
+      "Category": "Other",
+      "Subcategory": "Uncategorized",
+      "Provider": "PEER HASTAM BENY BRAK"
+    },
+    {
+      "Pattern": "ZEFFY.*ONEFAMILY.*HTTPSWWW\\.ZEFF",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Non-Profit",
+      "Provider": "ZeFFY One Family"
+    },
+    {
+      "Pattern": "GLATT.*MART.*INC",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Glatt Mart"
+    },
+    {
+      "Pattern": "FEE.*REVERSAL",
+      "Category": "Financial",
+      "Subcategory": "Fee",
+      "Provider": "Fee Reversal"
+    },
+    {
+      "Pattern": "OVERDRAFT.*FEE.*FOR",
+      "Category": "Financial",
+      "Subcategory": "Fee",
+      "Provider": "Overdraft Fee"
+    },
+    {
+      "Pattern": "OOMA INC",
+      "Category": "Utilities",
+      "Subcategory": "Phone",
+      "Provider": "Ooma Inc"
+    },
+    {
+      "Pattern": "OPTIMUM.COM/MOBILE",
+      "Category": "Utilities",
+      "Subcategory": "Phone",
+      "Provider": "Optimum"
+    },
+    {
+      "Pattern": "SMART FILTER",
+      "Category": "Utilities",
+      "Subcategory": "Phone",
+      "Provider": "SMART FILTER"
+    },
+    {
+      "Pattern": "PEF.*ISRAEL.*ENDOWMENT",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "PEF ISRAEL"
+    },
+    {
+      "Pattern": "NYCWATERBOARD.*BILLPAY",
+      "Category": "Utilities",
+      "Subcategory": "Water",
+      "Provider": "NYC Water Board"
+    },
+    {
+      "Pattern": "Online.*Payment.*Matrix",
+      "Category": "Financial",
+      "Subcategory": "Payment",
+      "Provider": "Matrix Trust Company"
     }
   ],
-  "LastUpdated": "2026-01-04T12:49:16.8787164-05:00"
+  "LastUpdated": "2026-01-04T19:11:00.3057857-05:00"
 }

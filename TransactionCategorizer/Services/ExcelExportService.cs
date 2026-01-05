@@ -85,54 +85,58 @@ public class ExcelExportService
         var debitsByCategory = transactions
             .Where(t => t.Amount < 0)
             .GroupBy(t => new { t.Category, t.Subcategory })
-            .OrderBy(g => g.Key.Category)
-            .ThenBy(g => g.Key.Subcategory)
             .ToList();
 
-        string lastCategory = "";
-        foreach (var group in debitsByCategory)
-        {
-            if (lastCategory != group.Key.Category)
+        // Group by category and calculate totals for sorting
+        var categoryGroups = debitsByCategory
+            .GroupBy(g => g.Key.Category)
+            .Select(cg => new
             {
-                // Category total row
-                if (!string.IsNullOrEmpty(lastCategory))
-                {
-                    var categoryTotal = debitsByCategory
-                        .Where(g => g.Key.Category == lastCategory)
-                        .Sum(g => g.Sum(t => t.Amount));
-                    
-                    ws.Cell(row, 1).Value = $"{lastCategory} Total";
-                    ws.Cell(row, 1).Style.Font.Bold = true;
-                    ws.Cell(row, 4).Value = categoryTotal;
-                    ws.Cell(row, 4).Style.NumberFormat.Format = "$#,##0.00";
-                    ws.Cell(row, 4).Style.Font.Bold = true;
-                    ws.Range(row, 1, row, 4).Style.Fill.BackgroundColor = XLColor.LightYellow;
-                    row++;
-                }
-                lastCategory = group.Key.Category;
-            }
+                Category = cg.Key,
+                Total = cg.Sum(g => g.Sum(t => t.Amount)),
+                Subcategories = cg
+                    .Select(g => new
+                    {
+                        Subcategory = g.Key.Subcategory,
+                        Total = g.Sum(t => t.Amount),
+                        Count = g.Count(),
+                        Transactions = g
+                    })
+                    .OrderByDescending(sg => Math.Abs(sg.Total)) // Sort subcategories by total (descending by absolute value)
+                    .ToList()
+            })
+            .OrderByDescending(cg => Math.Abs(cg.Total)) // Sort categories by total (descending by absolute value)
+            .ToList();
 
-            ws.Cell(row, 1).Value = group.Key.Category;
-            ws.Cell(row, 2).Value = group.Key.Subcategory;
-            ws.Cell(row, 3).Value = group.Count();
-            ws.Cell(row, 4).Value = group.Sum(t => t.Amount);
-            ws.Cell(row, 4).Style.NumberFormat.Format = "$#,##0.00";
-            row++;
-        }
-
-        // Last category total
-        if (!string.IsNullOrEmpty(lastCategory))
+        foreach (var categoryGroup in categoryGroups)
         {
-            var categoryTotal = debitsByCategory
-                .Where(g => g.Key.Category == lastCategory)
-                .Sum(g => g.Sum(t => t.Amount));
+            int categoryStartRow = row;
             
-            ws.Cell(row, 1).Value = $"{lastCategory} Total";
+            foreach (var subGroup in categoryGroup.Subcategories)
+            {
+                ws.Cell(row, 1).Value = categoryGroup.Category;
+                ws.Cell(row, 2).Value = subGroup.Subcategory;
+                ws.Cell(row, 3).Value = subGroup.Count;
+                ws.Cell(row, 4).Value = subGroup.Total;
+                ws.Cell(row, 4).Style.NumberFormat.Format = "$#,##0.00";
+                row++;
+            }
+            
+            // Category total
+            ws.Cell(row, 1).Value = $"{categoryGroup.Category} Total";
             ws.Cell(row, 1).Style.Font.Bold = true;
-            ws.Cell(row, 4).Value = categoryTotal;
+            ws.Cell(row, 4).Value = categoryGroup.Total;
             ws.Cell(row, 4).Style.NumberFormat.Format = "$#,##0.00";
             ws.Cell(row, 4).Style.Font.Bold = true;
             ws.Range(row, 1, row, 4).Style.Fill.BackgroundColor = XLColor.LightYellow;
+            
+            // Group subcategories under category
+            if (row - 1 > categoryStartRow)
+            {
+                ws.Rows(categoryStartRow, row - 1).Group();
+                ws.Rows(categoryStartRow, row - 1).Collapse();
+            }
+            
             row++;
         }
 
@@ -146,6 +150,9 @@ public class ExcelExportService
         ws.Range(row, 1, row, 4).Style.Fill.BackgroundColor = XLColor.LightBlue;
 
         ws.Columns().AdjustToContents();
+        
+        // Set outline properties for better visibility
+        ws.ShowOutlineSymbols = true;
     }
 
     private void CreateDetailedSheet(IXLWorkbook workbook, List<Transaction> transactions, string sheetName)
@@ -153,31 +160,49 @@ public class ExcelExportService
         var ws = workbook.Worksheets.Add(sheetName);
         var row = 1;
 
-        // Group by Category, then Subcategory, sort by Provider, then Date
+        // Group by Category, calculate totals, and sort by total (descending by absolute value)
         var grouped = transactions
             .GroupBy(t => t.Category)
-            .OrderBy(g => g.Key)
+            .Select(cg => new
+            {
+                Category = cg.Key,
+                Total = cg.Sum(t => t.Amount),
+                Transactions = cg,
+                Subcategories = cg
+                    .GroupBy(t => t.Subcategory)
+                    .Select(sg => new
+                    {
+                        Subcategory = sg.Key,
+                        Total = sg.Sum(t => t.Amount),
+                        Transactions = sg
+                            .OrderBy(t => t.Provider)
+                            .ThenBy(t => t.TransactionDate)
+                            .ToList()
+                    })
+                    .OrderByDescending(sg => Math.Abs(sg.Total)) // Sort subcategories by total (descending)
+                    .ToList()
+            })
+            .OrderByDescending(cg => Math.Abs(cg.Total)) // Sort categories by total (descending)
             .ToList();
 
         foreach (var categoryGroup in grouped)
         {
+            var categoryStartRow = row;
+            
             // Category header
-            ws.Cell(row, 1).Value = categoryGroup.Key;
+            ws.Cell(row, 1).Value = categoryGroup.Category;
             ws.Cell(row, 1).Style.Font.Bold = true;
             ws.Cell(row, 1).Style.Font.FontSize = 14;
             ws.Cell(row, 1).Style.Fill.BackgroundColor = XLColor.LightBlue;
             ws.Range(row, 1, row, 8).Merge();
             row++;
 
-            var subGroups = categoryGroup
-                .GroupBy(t => t.Subcategory)
-                .OrderBy(g => g.Key)
-                .ToList();
-
-            foreach (var subGroup in subGroups)
+            foreach (var subGroup in categoryGroup.Subcategories)
             {
+                var subcategoryStartRow = row;
+                
                 // Subcategory header
-                ws.Cell(row, 1).Value = $"  {subGroup.Key}";
+                ws.Cell(row, 1).Value = $"  {subGroup.Subcategory}";
                 ws.Cell(row, 1).Style.Font.Bold = true;
                 ws.Cell(row, 1).Style.Font.FontSize = 12;
                 ws.Cell(row, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
@@ -194,13 +219,10 @@ public class ExcelExportService
                 }
                 row++;
 
-                // Transactions sorted by Provider, then Date
-                var sortedTransactions = subGroup
-                    .OrderBy(t => t.Provider)
-                    .ThenBy(t => t.TransactionDate)
-                    .ToList();
+                var transactionStartRow = row;
 
-                foreach (var t in sortedTransactions)
+                // Transactions already sorted by Provider, then Date
+                foreach (var t in subGroup.Transactions)
                 {
                     ws.Cell(row, 1).Value = t.TransactionDate;
                     ws.Cell(row, 1).Style.NumberFormat.Format = "MM/dd/yyyy";
@@ -215,29 +237,45 @@ public class ExcelExportService
                     ws.Cell(row, 5).Value = $"{t.AccountType}-{t.AccountId}";
                     ws.Cell(row, 6).Value = t.OriginalType;
                     ws.Cell(row, 7).Value = t.SourceFile;
-                    ws.Cell(row, 8).Value = t.CategorizationSource;
+                    ws.Cell(row, 8).Value = t.CategorizationDetails;
                     row++;
                 }
 
                 // Subcategory total
-                ws.Cell(row, 3).Value = $"{subGroup.Key} Total:";
+                ws.Cell(row, 3).Value = $"{subGroup.Subcategory} Total:";
                 ws.Cell(row, 3).Style.Font.Bold = true;
-                ws.Cell(row, 4).Value = subGroup.Sum(t => t.Amount);
+                ws.Cell(row, 4).Value = subGroup.Total;
                 ws.Cell(row, 4).Style.NumberFormat.Format = "$#,##0.00";
                 ws.Cell(row, 4).Style.Font.Bold = true;
                 ws.Range(row, 1, row, 8).Style.Fill.BackgroundColor = XLColor.LightYellow;
                 row++;
+                
+                // Group the subcategory details (transactions can be collapsed)
+                if (row - 1 > transactionStartRow)
+                {
+                    ws.Rows(transactionStartRow, row - 2).Group();
+                    ws.Rows(transactionStartRow, row - 2).Collapse();
+                }
+                
                 row++; // Empty row
             }
 
             // Category total
-            ws.Cell(row, 3).Value = $"{categoryGroup.Key} TOTAL:";
+            ws.Cell(row, 3).Value = $"{categoryGroup.Category} TOTAL:";
             ws.Cell(row, 3).Style.Font.Bold = true;
-            ws.Cell(row, 4).Value = categoryGroup.Sum(t => t.Amount);
+            ws.Cell(row, 4).Value = categoryGroup.Total;
             ws.Cell(row, 4).Style.NumberFormat.Format = "$#,##0.00";
             ws.Cell(row, 4).Style.Font.Bold = true;
             ws.Range(row, 1, row, 8).Style.Fill.BackgroundColor = XLColor.LightGreen;
             row++;
+            
+            // Group the entire category (subcategories can be collapsed)
+            if (row - 1 > categoryStartRow + 1)
+            {
+                ws.Rows(categoryStartRow + 1, row - 2).Group();
+                ws.Rows(categoryStartRow + 1, row - 2).Collapse();
+            }
+            
             row++; // Empty row between categories
         }
 
@@ -251,6 +289,10 @@ public class ExcelExportService
 
         ws.Columns().AdjustToContents();
         ws.Column(3).Width = 60; // Description column wider
+        ws.Column(8).Width = 50; // Categorization column wider for pattern details
+        
+        // Set outline properties for better visibility
+        ws.ShowOutlineSymbols = true;
     }
 
     private void CreateAllTransactionsSheet(IXLWorkbook workbook, List<Transaction> transactions)
@@ -293,7 +335,7 @@ public class ExcelExportService
             ws.Cell(row, 8).Value = $"{t.AccountType}-{t.AccountId}";
             ws.Cell(row, 9).Value = t.OriginalType;
             ws.Cell(row, 10).Value = t.SourceFile;
-            ws.Cell(row, 11).Value = t.CategorizationSource;
+            ws.Cell(row, 11).Value = t.CategorizationDetails;
             row++;
         }
 
@@ -301,5 +343,6 @@ public class ExcelExportService
         ws.RangeUsed()?.SetAutoFilter();
         ws.Columns().AdjustToContents();
         ws.Column(6).Width = 60; // Description column
+        ws.Column(11).Width = 50; // Categorization column
     }
 }

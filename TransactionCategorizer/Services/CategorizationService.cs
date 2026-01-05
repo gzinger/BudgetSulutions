@@ -32,7 +32,6 @@ public class CategorizationService
         (@"Payment to Chase card", "Financial", "Payment", "Chase"),
         (@"Credit Return", "Income", "Refund", ""),
         (@"MONEYGRAM", "Financial", "Transfer", "MoneyGram"),
-        (@"BILLPAY|Bill Pay|Online Payment.*To", "Financial", "Payment", ""),
         (@"AUTOMATIC PAYMENT.*THANK", "Financial", "Payment", "Chase"),
         (@"LOAN_PMT|LOAN PMT", "Financial", "Payment", ""),
         
@@ -117,7 +116,11 @@ public class CategorizationService
 
         foreach (var transaction in transactions)
         {
-            // Skip if already categorized from source file
+            // Try user mappings FIRST - they take precedence over everything including source file
+            if (TryApplyUserMapping(transaction))
+                continue;
+
+            // Then check if already categorized from source file
             if (!string.IsNullOrEmpty(transaction.Category) && transaction.CategorizationSource == "Original")
             {
                 ExtractProviderFromDescription(transaction);
@@ -128,10 +131,6 @@ public class CategorizationService
                 }
                 continue;
             }
-
-            // Try user mappings first (from file)
-            if (TryApplyUserMapping(transaction))
-                continue;
 
             // Try default patterns
             if (TryApplyDefaultPattern(transaction))
@@ -163,6 +162,7 @@ public class CategorizationService
                         ? ExtractProviderName(transaction.Description) 
                         : mapping.Provider;
                     transaction.CategorizationSource = "UserMapping";
+                    transaction.MatchedPattern = mapping.Pattern;
                     return true;
                 }
             }
@@ -177,6 +177,7 @@ public class CategorizationService
                         ? ExtractProviderName(transaction.Description) 
                         : mapping.Provider;
                     transaction.CategorizationSource = "UserMapping";
+                    transaction.MatchedPattern = mapping.Pattern;
                     return true;
                 }
             }
@@ -196,6 +197,7 @@ public class CategorizationService
                     ? ExtractProviderName(transaction.Description) 
                     : provider;
                 transaction.CategorizationSource = "Pattern";
+                transaction.MatchedPattern = pattern;
                 return true;
             }
         }
@@ -217,6 +219,7 @@ public class CategorizationService
             string? category = null;
             string? subcategory = null;
             string? provider = null;
+            string matchedPattern = "";
 
             if (skipAll)
             {
@@ -227,6 +230,7 @@ public class CategorizationService
                     transaction.Subcategory = "Other";
                     transaction.Provider = ExtractProviderName(transaction.Description);
                     transaction.CategorizationSource = "Skipped";
+                    transaction.MatchedPattern = "";
                 }
                 continue;
             }
@@ -260,6 +264,7 @@ public class CategorizationService
                                 (category, subcategory, provider) = userInput.Value;
                                 // Save mapping immediately
                                 var pattern = CreatePatternFromDescription(sample.Description);
+                                matchedPattern = pattern;
                                 AddAndSaveMapping(pattern, category!, subcategory!, provider ?? "");
                             }
                         }
@@ -267,6 +272,7 @@ public class CategorizationService
                         {
                             // AI result accepted - save it as a mapping for future use
                             var pattern = CreatePatternFromDescription(sample.Description);
+                            matchedPattern = pattern;
                             AddAndSaveMapping(pattern, category!, subcategory!, provider ?? "");
                         }
                     }
@@ -286,6 +292,7 @@ public class CategorizationService
                     (category, subcategory, provider) = userInput.Value;
                     // Save mapping immediately after user input
                     var pattern = CreatePatternFromDescription(sample.Description);
+                    matchedPattern = pattern;
                     AddAndSaveMapping(pattern, category!, subcategory!, provider ?? "");
                 }
             }
@@ -297,6 +304,7 @@ public class CategorizationService
                 transaction.Subcategory = subcategory ?? "Other";
                 transaction.Provider = provider ?? ExtractProviderName(transaction.Description);
                 transaction.CategorizationSource = skipAll ? "Skipped" : "User";
+                transaction.MatchedPattern = matchedPattern;
             }
         }
     }
@@ -316,7 +324,20 @@ public class CategorizationService
             Console.WriteLine($"Balance:      {transaction.BalanceDisplay}");
         Console.WriteLine($"{'=',-80}");
         
+        // Ensure categories are loaded
+        if (_categoriesConfig == null || _categoriesConfig.Categories == null || _categoriesConfig.Categories.Count == 0)
+        {
+            Console.WriteLine("\nWARNING: Categories configuration not loaded properly!");
+            _categoriesConfig = _configService.LoadCategories(_configDirectory);
+        }
+
         Console.WriteLine("\nAvailable categories:");
+        if (_categoriesConfig.Categories.Count == 0)
+        {
+            Console.WriteLine("  ERROR: No categories found! Please check categories.json");
+            return null;
+        }
+        
         for (int i = 0; i < _categoriesConfig.Categories.Count; i++)
         {
             Console.WriteLine($"  {i + 1}. {_categoriesConfig.Categories[i].Name}");
@@ -450,7 +471,7 @@ public class CategorizationService
         {
             @"To\s+([A-Za-z][A-Za-z\s&'-]+?)(?:\s+\d|$)",  // "To PROVIDER NAME"
             @"^([A-Za-z][A-Za-z\s&'-]+?)(?:\s+\d|\*|$)",   // Start of description
-            @"([A-Z][A-Za-z&'-]+(?:\s+[A-Z][A-Za-z&'-]+)?)" // Capital words
+            @"([A-Z][A-Za-z&'-]+(?:\s+[A-Z][A-Zaez&'-]+)?)" // Capital words
         };
 
         foreach (var pattern in patterns)

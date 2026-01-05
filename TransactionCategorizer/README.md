@@ -151,7 +151,7 @@ Account: Bank - 1047
 
 Common categories:
   1. Utilities    2. Transportation    3. Groceries    4. Shopping
-  5. Food & Drink    6. Gifts & Donations    7. Income    8. Transfers
+  5. Food & Dining    6. Gifts & Donations    7. Income    8. Transfers
   ...
 
 Enter category (number/custom), 's' to skip, 'a' to skip all:
@@ -188,7 +188,7 @@ Common categories used:
 - **Transportation** - Tolls, Gas, Parking
 - **Groceries** - Supermarket
 - **Shopping** - Online Shopping, Books, Office Supplies
-- **Food & Drink** - Restaurant
+- **Food & Dining** - Restaurant
 - **Gifts & Donations** - Religious, Charity, Non-Profit
 - **Income** - Salary, Interest
 - **Transfers** - Internal Transfer, Zelle

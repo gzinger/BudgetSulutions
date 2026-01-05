@@ -68,7 +68,7 @@
       "inferenceRules": [
         {
           "subcategory": "Gas/Fuel",
-          "keywords": [ "gas", "fuel", "sunoco", "exxon", "shell", "bp", "mobil", "chevron" ]
+          "keywords": [ "gas", "fuel", "sunoco", "exxon", "shell", "bp", "mobil", "chevron", "SUNOCO" ]
         },
         {
           "subcategory": "Tolls",
@@ -238,7 +238,7 @@
     },
     {
       "name": "Financial",
-      "subcategories": [ "Transfer", "Payment", "Fee", "ATM", "Loan" ],
+      "subcategories": [ "Transfer", "Payment", "Fee", "ATM", "Loan", "Taxes" ],
       "inferenceRules": [
         {
           "subcategory": "Transfer",
