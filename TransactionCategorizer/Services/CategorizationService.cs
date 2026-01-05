@@ -123,6 +123,12 @@ public class CategorizationService
             // Then check if already categorized from source file
             if (!string.IsNullOrEmpty(transaction.Category) && transaction.CategorizationSource == "Original")
             {
+                // Apply category mapping if configured
+                if (TryApplyCategoryMapping(transaction))
+                {
+                    transaction.CategorizationSource = "CategoryMapping";
+                }
+                
                 ExtractProviderFromDescription(transaction);
                 // Still need subcategory
                 if (string.IsNullOrEmpty(transaction.Subcategory))
@@ -201,6 +207,48 @@ public class CategorizationService
                 return true;
             }
         }
+        return false;
+    }
+
+    private bool TryApplyCategoryMapping(Transaction transaction)
+    {
+        // Check if category mappings are configured
+        if (_categoriesConfig.CategoryMappings == null || _categoriesConfig.CategoryMappings.Count == 0)
+            return false;
+
+        var originalCategory = transaction.Category;
+        var originalSubcategory = transaction.Subcategory ?? "";
+
+        // Try to find exact match (category + subcategory)
+        var exactMatch = _categoriesConfig.CategoryMappings.FirstOrDefault(m =>
+            m.OriginalCategory.Equals(originalCategory, StringComparison.OrdinalIgnoreCase) &&
+            !string.IsNullOrEmpty(m.OriginalSubcategory) &&
+            m.OriginalSubcategory.Equals(originalSubcategory, StringComparison.OrdinalIgnoreCase));
+
+        if (exactMatch != null)
+        {
+            transaction.Category = exactMatch.MappedCategory;
+            transaction.Subcategory = exactMatch.MappedSubcategory;
+            transaction.MatchedPattern = $"{exactMatch.OriginalCategory}/{exactMatch.OriginalSubcategory}";
+            return true;
+        }
+
+        // Try to find category-only match
+        var categoryMatch = _categoriesConfig.CategoryMappings.FirstOrDefault(m =>
+            m.OriginalCategory.Equals(originalCategory, StringComparison.OrdinalIgnoreCase) &&
+            string.IsNullOrEmpty(m.OriginalSubcategory));
+
+        if (categoryMatch != null)
+        {
+            transaction.Category = categoryMatch.MappedCategory;
+            if (!string.IsNullOrEmpty(categoryMatch.MappedSubcategory))
+            {
+                transaction.Subcategory = categoryMatch.MappedSubcategory;
+            }
+            transaction.MatchedPattern = categoryMatch.OriginalCategory;
+            return true;
+        }
+
         return false;
     }
 

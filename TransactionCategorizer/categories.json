@@ -277,5 +277,91 @@
       ]
     }
   ],
+  "categoryMappings": [
+    {
+      "originalCategory": "Gas",
+      "originalSubcategory": "",
+      "mappedCategory": "Transportation",
+      "mappedSubcategory": "Gas/Fuel"
+    },
+    {
+      "originalCategory": "Travel",
+      "originalSubcategory": "",
+      "mappedCategory": "Transportation",
+      "mappedSubcategory": "Other"
+    },
+    {
+      "originalCategory": "Fuel",
+      "originalSubcategory": "",
+      "mappedCategory": "Transportation",
+      "mappedSubcategory": "Gas/Fuel"
+    },
+    {
+      "originalCategory": "Restaurants",
+      "originalSubcategory": "",
+      "mappedCategory": "Food & Dining",
+      "mappedSubcategory": "Restaurant"
+    },
+    {
+      "originalCategory": "Dining",
+      "originalSubcategory": "",
+      "mappedCategory": "Food & Dining",
+      "mappedSubcategory": "Restaurant"
+    },
+    {
+      "originalCategory": "Bills & Utilities",
+      "originalSubcategory": "",
+      "mappedCategory": "Utilities",
+      "mappedSubcategory": ""
+    },
+    {
+      "originalCategory": "Bills & Utilities",
+      "originalSubcategory": "Phone",
+      "mappedCategory": "Utilities",
+      "mappedSubcategory": "Phone"
+    },
+    {
+      "originalCategory": "Bills & Utilities",
+      "originalSubcategory": "Internet",
+      "mappedCategory": "Utilities",
+      "mappedSubcategory": "Internet/Cable"
+    },
+    {
+      "originalCategory": "Professional Services",
+      "originalSubcategory": "",
+      "mappedCategory": "Other",
+      "mappedSubcategory": "Services"
+    },
+    {
+      "originalCategory": "Personal",
+      "originalSubcategory": "",
+      "mappedCategory": "Other",
+      "mappedSubcategory": "Personal"
+    },
+    {
+      "originalCategory": "Home",
+      "originalSubcategory": "",
+      "mappedCategory": "Housing",
+      "mappedSubcategory": ""
+    },
+    {
+      "originalCategory": "Auto & Transport",
+      "originalSubcategory": "",
+      "mappedCategory": "Transportation",
+      "mappedSubcategory": ""
+    },
+    {
+      "originalCategory": "Merchandise",
+      "originalSubcategory": "",
+      "mappedCategory": "Shopping",
+      "mappedSubcategory": "Retail"
+    },
+    {
+      "originalCategory": "Food & Drink",
+      "originalSubcategory": "",
+      "mappedCategory": "Food & Dining",
+      "mappedSubcategory": ""
+    }
+  ],
   "lastUpdated": "2025-01-01T00:00:00"
 }

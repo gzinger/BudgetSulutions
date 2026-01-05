@@ -361,7 +361,7 @@
       "Provider": "GOOGLE"
     },
     {
-      "Pattern": "TOLDOT\\.COM.*647.*551",
+      "Pattern": "TOLDOT\\.COM ",
       "Category": "Gifts \u0026 Donations",
       "Subcategory": "Religious",
       "Provider": "TOLDOT"
@@ -775,11 +775,119 @@
       "Provider": "NYC Water Board"
     },
     {
-      "Pattern": "Online.*Payment.*Matrix",
+      "Pattern": "Online Payment .* To Matrix",
       "Category": "Financial",
       "Subcategory": "Payment",
       "Provider": "Matrix Trust Company"
+    },
+    {
+      "Pattern": "Online.*Payment.*NYC",
+      "Category": "Utilities",
+      "Subcategory": "Water",
+      "Provider": "NYC Water Board"
+    },
+    {
+      "Pattern": "Ezer.*L\u0027Cholim.*BRNDDD",
+      "Category": "Income",
+      "Subcategory": "Salary",
+      "Provider": "Ezer L\u0027C"
+    },
+    {
+      "Pattern": "CHASE.*CREDIT.*CRD",
+      "Category": "Financial",
+      "Subcategory": "Payment",
+      "Provider": "Chase"
+    },
+    {
+      "Pattern": "TECH.*FLATBUSH.*gosq\\.com",
+      "Category": "Utilities",
+      "Subcategory": "Phone",
+      "Provider": "SQ"
+    },
+    {
+      "Pattern": "DEPOSIT.*NUMBER",
+      "Category": "Income",
+      "Subcategory": "Deposit",
+      "Provider": "Deposit ID Number 129096"
+    },
+    {
+      "Pattern": "MEIRS.*HEIMISHE.*BAKERY",
+      "Category": "Groceries",
+      "Subcategory": "Specialty",
+      "Provider": "MEIRS HEIMISHE BAKERY BROOKLYN NY"
+    },
+    {
+      "Pattern": "LUNA.*PARK.*FOOD",
+      "Category": "Food \u0026 Dining",
+      "Subcategory": "Other",
+      "Provider": "Luna Park Food Corp"
+    },
+    {
+      "Pattern": "DELI.*GROCERY.*GOD",
+      "Category": "Groceries",
+      "Subcategory": "Supermarket",
+      "Provider": "Deli Grocery"
+    },
+    {
+      "Pattern": "Reb.*Meir.*Baal",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Charity",
+      "Provider": "Reb Meir Baal Ha"
+    },
+    {
+      "Pattern": "IRS.*TREAS.*310",
+      "Category": "Income",
+      "Subcategory": "Refund",
+      "Provider": "IRS"
+    },
+    {
+      "Pattern": "YAD.*L\u0060ACHIM.*718",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Charity",
+      "Provider": "Yad L\u0027Achim"
+    },
+    {
+      "Pattern": "SHEIN\\.COM.*844",
+      "Category": "Shopping",
+      "Subcategory": "Clothing",
+      "Provider": "SHEIN"
+    },
+    {
+      "Pattern": "NUTS.*888",
+      "Category": "Groceries",
+      "Subcategory": "Specialty",
+      "Provider": "OH NUTS"
+    },
+    {
+      "Pattern": "INSPIRE.*UPLIFT.*877",
+      "Category": "Shopping",
+      "Subcategory": "Retail",
+      "Provider": "INSPIRE UPLIFT"
+    },
+    {
+      "Pattern": "BLUE.*MOUNTAIN.*F\u0026B",
+      "Category": "Food \u0026 Dining",
+      "Subcategory": "Restaurant",
+      "Provider": "Blue Mountain F\u0026B"
+    },
+    {
+      "Pattern": "Payment.*Thank.*You",
+      "Category": "Financial",
+      "Subcategory": "Payment",
+      "Provider": "Web"
+    },
+    {
+      "Pattern": "Returned.*Payment",
+      "Category": "Financial",
+      "Subcategory": "Payment",
+      "Provider": "Returned Payment"
+    },
+    {
+      "Pattern": "Online.*Payment.*JEWISH",
+      "Category": "Gifts \u0026 Donations",
+      "Subcategory": "Religious",
+      "Provider": "JEWISH LEGACY"
     }
   ],
-  "LastUpdated": "2026-01-04T19:11:00.3057857-05:00"
+  "LastUpdated": "2026-01-04T20:03:08.7857222-05:00"
 }

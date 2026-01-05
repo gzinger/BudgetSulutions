@@ -20,10 +20,22 @@ public class SubcategoryRule
 }
 
 /// <summary>
+/// Mapping rule for converting original CSV categories to predefined categories
+/// </summary>
+public class CategoryMappingRule
+{
+    public string OriginalCategory { get; set; } = string.Empty;
+    public string OriginalSubcategory { get; set; } = string.Empty;
+    public string MappedCategory { get; set; } = string.Empty;
+    public string MappedSubcategory { get; set; } = string.Empty;
+}
+
+/// <summary>
 /// Root object for categories.json
 /// </summary>
 public class CategoriesConfiguration
 {
     public List<CategoryDefinition> Categories { get; set; } = new();
+    public List<CategoryMappingRule>? CategoryMappings { get; set; }
     public DateTime LastUpdated { get; set; }
 }
